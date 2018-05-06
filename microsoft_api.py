@@ -20,6 +20,7 @@ def requestChunk(input):
     except Exception as e:
         print("[Errno {0}] {1}".format(e.errno, e.strerror))
 
+### Open file
 input = "{ \
  \"documents\": [ \
     {\
