@@ -1,23 +1,5 @@
 import http.client, urllib.request, urllib.parse, urllib.error, base64
 
-input = "{ \
- \"documents\": [ \
-    {\
-      \"language\": \"en\",\
-      \"id\": \"1\",\
-      \"text\": \"Hello world. This is some input text that I love.\"\
-    },\
-    {\
-      \"language\": \"fr\",\
-      \"id\": \"2\",\
-      \"text\": \"Bonjour tout le monde\"\
-    },\
-  ]\
-}"
-
-a = requestChunk(input)
-print(a)
-
 def requestChunk(input):
     headers = {
         # Request headers
@@ -38,3 +20,21 @@ def requestChunk(input):
     except Exception as e:
         #################TRACK!!!!!!!!!!!!#########
         print("[Errno {0}] {1}".format(e.errno, e.strerror))
+
+input = "{ \
+ \"documents\": [ \
+    {\
+      \"language\": \"en\",\
+      \"id\": \"1\",\
+      \"text\": \"Hello world. This is some input text that I love.\"\
+    },\
+    {\
+      \"language\": \"fr\",\
+      \"id\": \"2\",\
+      \"text\": \"Bonjour tout le monde\"\
+    },\
+  ]\
+}"
+
+a = requestChunk(input)
+print(a)
