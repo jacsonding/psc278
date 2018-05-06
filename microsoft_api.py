@@ -31,7 +31,7 @@ with open('2014_step1.csv','rb') as csvfile:
         lines.append(row)
 
 #Delete first line (headers)
-lines.pop()
+del lines[0]
 
 #Create / Overwrite file
 f = open('batch.output','w+')
@@ -64,4 +64,4 @@ for i in range(0,len(lines),1000):
     outputFile.write(response)
     outputFile.close()
     print("Up to: "+str(i+j))
-    break
+    
