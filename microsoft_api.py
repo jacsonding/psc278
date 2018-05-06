@@ -1,4 +1,6 @@
 import httplib, urllib, base64
+import csv
+import pdb
 
 def requestChunk(input):
     headers = {
@@ -20,23 +22,44 @@ def requestChunk(input):
     except Exception as e:
         print("[Errno {0}] {1}".format(e.errno, e.strerror))
 
-### Open file
-input = "{ \
- \"documents\": [ \
-    {\
-      \"language\": \"en\",\
-      \"id\": \"1\",\
-      \"text\": \"Ironically, this is the first keytar bear post I've ever upvoted. ^^^^^I ^^^^^do ^^^^^hope ^^^^^he's ^^^^^OK\"\
-    },\
-    {\
-      \"language\": \"en\",\
-      \"id\": \"2\",\
-      \"text\": \"I am a fan of Blur and of many things Damon Albarn has done, I even own [the Ravenous movie score](http://www.youtube.com/watch?v=e1s5jUg1Ytc) on CD, actual plastic. Really though, if you like Blur watch [No Distance Left To Run](http://vimeo.com/27945831) if you haven't already. But I never want to hear Song 2 ever again.\"\
-    },\
-    {\"language\":\"en\",\"id\":\"a\",\"text\":\"I am a fan of Blur and of many things Damon Albarn has done, I even own [the Ravenous movie score](http://www.youtube.com/watch?v=e1s5jUg1Ytc) on CD, actual plastic. Really though, if you like Blur watch [No Distance Left To Run](http://vimeo.com/27945831) if you haven't already. But I never want to hear Song 2 ever again.\"\
-    },\
-  ]\
-}"
+#Read all the lines
+lines = []
+with open('test.csv','rb') as csvfile:
+    spamreader = csv.reader(csvfile)
+    for row in spamreader:
+        lines.append(row)
 
-a = requestChunk(input)
-print(a)
+#Delete first line (headers)
+lines.pop()
+
+#Create / Overwrite file
+f = open('batch.output','w+')
+f.close()
+
+#Batch in 1000
+for i in range(0,len(lines),1000):
+    #Open output file 'a'
+    outputFile = open('batch.output','ab')
+
+    endNum = 1000
+    if ((len(lines)-i)<endNum):
+        endNum = len(lines)-i
+
+    # Create list of current 1000
+    jsonString = "{ \"documents\": ["
+    for j in range(0,endNum):
+        id = lines[i+j][5]
+        body = lines[i+j][0]
+        id = id.replace("\"","\\\"")
+        body = body.replace("\"","\\\"")
+        jsonString += "{\"language\":\"en\",\"id\":\""+id+"\",\"text\":\""+body+"\"},"
+        # outputFile.write(lines[i+j][0]+lines[i+j][5]) #body and i
+    jsonString += "]}"
+    # Create dictionary
+
+    response = ""
+    response = requestChunk(jsonString) ############REQUEST############
+    outputFile.write(jsonString)
+    outputFile.close()
+    print("Up to: "+str(i+j))
+    break

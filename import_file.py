@@ -20,18 +20,13 @@ for i in range(0,len(lines),1000):
         endNum = len(lines)-i
 
     # Create list of current 1000
-    body_list = []
-    id_list = []
+    jsonString = "{ \"documents\": ["
     for j in range(0,endNum):
-        body_list.append(lines[i+j][0])
-        id_list.append(lines[i+j][5])
+        jsonString += "{\"language\":\"en\",\"id\":\""+lines[i+j][5]+"\",\"text\":\""+lines[i+j][0]+"\"},"
         # outputFile.write(lines[i+j][0]+lines[i+j][5]) #body and i
-
+    jsonString += "]}"
     # Create dictionary
-    batch_dict = {}
-    for j in range(len(id_list)):
-        batch_dict[id_list[j]] = body_list[j]
-    pdb.set_trace()
 
+    outputFile.write(jsonString)
     outputFile.close()
     print("Up to: "+str(i+j))
