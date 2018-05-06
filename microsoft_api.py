@@ -26,12 +26,14 @@ input = "{ \
     {\
       \"language\": \"en\",\
       \"id\": \"1\",\
-      \"text\": \"Hello world. This is some input text that I love.\"\
+      \"text\": \"Ironically, this is the first keytar bear post I've ever upvoted. ^^^^^I ^^^^^do ^^^^^hope ^^^^^he's ^^^^^OK\"\
     },\
     {\
-      \"language\": \"fr\",\
+      \"language\": \"en\",\
       \"id\": \"2\",\
-      \"text\": \"Bonjour tout le monde\"\
+      \"text\": \"I am a fan of Blur and of many things Damon Albarn has done, I even own [the Ravenous movie score](http://www.youtube.com/watch?v=e1s5jUg1Ytc) on CD, actual plastic. Really though, if you like Blur watch [No Distance Left To Run](http://vimeo.com/27945831) if you haven't already. But I never want to hear Song 2 ever again.\"\
+    },\
+    {\"language\":\"en\",\"id\":\"a\",\"text\":\"I am a fan of Blur and of many things Damon Albarn has done, I even own [the Ravenous movie score](http://www.youtube.com/watch?v=e1s5jUg1Ytc) on CD, actual plastic. Really though, if you like Blur watch [No Distance Left To Run](http://vimeo.com/27945831) if you haven't already. But I never want to hear Song 2 ever again.\"\
     },\
   ]\
 }"
