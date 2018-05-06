@@ -1,6 +1,7 @@
 import httplib, urllib, base64
 import csv
 import pdb
+import json
 
 def requestChunk(input):
     headers = {
@@ -24,7 +25,7 @@ def requestChunk(input):
 
 #Read all the lines
 lines = []
-with open('test.csv','rb') as csvfile:
+with open('2014_step1.csv','rb') as csvfile:
     spamreader = csv.reader(csvfile)
     for row in spamreader:
         lines.append(row)
@@ -50,16 +51,17 @@ for i in range(0,len(lines),1000):
     for j in range(0,endNum):
         id = lines[i+j][5]
         body = lines[i+j][0]
-        id = id.replace("\"","\\\"")
-        body = body.replace("\"","\\\"")
-        jsonString += "{\"language\":\"en\",\"id\":\""+id+"\",\"text\":\""+body+"\"},"
+        currDict = { "language":"en", "id":id, "text":body}
+        currString = json.dumps(currDict)
+        jsonString += currString +","
         # outputFile.write(lines[i+j][0]+lines[i+j][5]) #body and i
+    jsonString = jsonString[:-1]
     jsonString += "]}"
     # Create dictionary
 
     response = ""
     response = requestChunk(jsonString) ############REQUEST############
-    outputFile.write(jsonString)
+    outputFile.write(response)
     outputFile.close()
     print("Up to: "+str(i+j))
     break
