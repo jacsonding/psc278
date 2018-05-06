@@ -19,7 +19,19 @@ for i in range(0,len(lines),1000):
     if ((len(lines)-i)<endNum):
         endNum = len(lines)-i
 
+    # Create list of current 1000
+    body_list = []
+    id_list = []
     for j in range(0,endNum):
-        outputFile.write(lines[i+j][0]+lines[i+j][5]) #body and id
+        body_list.append(lines[i+j][0])
+        id_list.append(lines[i+j][5])
+        # outputFile.write(lines[i+j][0]+lines[i+j][5]) #body and i
+
+    # Create dictionary
+    batch_dict = {}
+    for j in range(len(id_list)):
+        batch_dict[id_list[j]] = body_list[j]
+    pdb.set_trace()
+
     outputFile.close()
     print("Up to: "+str(i+j))
