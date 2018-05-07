@@ -18,8 +18,8 @@ for batch in lines:
         scoreDict[id] = score
     for row in errors:
         id = row['id']
-        error = ['message']
-        errorDict[id] = error
+        error = row['message']
+        errorDict[id] = "["+error+"]"
 
 f = open('scores.csv','w+')
 writer = csv.writer(f)
