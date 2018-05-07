@@ -1,6 +1,7 @@
 #Purpose: to unify the hacky json files in the output
 import json
 import pdb
+import csv
 
 f = open('batch.output')
 lines = f.readlines()
@@ -20,13 +21,14 @@ for batch in lines:
         error = ['message']
         errorDict[id] = error
 
-pdb.set_trace()
-scoreDict = json.dumps(scoreDict)
-f = open('scores.json','w+')
-f.write(scoreDict)
+f = open('scores.csv','w+')
+writer = csv.writer(f)
+for key, value in scoreDict.items():
+    writer.writerow([key, value])
 f.close()
 
-errorDict = json.dumps(errorDict)
-f = open('errors.json','w+')
-f.write(errorDict)
+f = open('errors.csv','w+')
+writer = csv.writer(f)
+for key, value in errorDict.items():
+    writer.writerow([key, value])
 f.close()
