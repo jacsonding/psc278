@@ -26,17 +26,19 @@ for i=1:size(x,1)
     
     
     % Find wins
-    gameW = NBA((NBA.Winner == thisCity) & (NBA.UTC>startTime) & (NBA.UTC<endTime),:);
+    gameW = find((NBA.Winner == thisCity) & (NBA.UTC>startTime) & (NBA.UTC<endTime));
     if ~isempty(gameW) %No games within the range
-        ClosestGameW(i) = gameW.UTC(1);
-        RelativeTimeW(i) = thisTime-gameW.UTC(1);
+        gameW = gameW(1);
+        ClosestGameW(i) = NBA.UTC(gameW);
+        RelativeTimeW(i) = thisTime-NBA.UTC(gameW);
     end
     
     % Find losses
-    gameL = NBA((NBA.Loser == thisCity) & (NBA.UTC>startTime) & (NBA.UTC<endTime),:);
+    gameL = find((NBA.Loser == thisCity) & (NBA.UTC>startTime) & (NBA.UTC<endTime));
     if ~isempty(gameL) %No games within the range
-        ClosestGameL(i) = gameL.UTC(1);
-        RelativeTimeL(i) = thisTime-gameL.UTC(1);
+        gameL = gameL(1);
+        ClosestGameL(i) = NBA.UTC(gameL);
+        RelativeTimeL(i) = thisTime-NBA.UTC(gameL);
     end
     
     
@@ -46,8 +48,8 @@ for i=1:size(x,1)
     end
 end
 
-% ClosestGameW = array2table(ClosestGameW,'VariableNames',{'ClosestGameW'});
-% RelativeTimeW = array2table(RelativeTimeW,'VariableNames',{'RelativeTimeW'});
-% ClosestGameL = array2table(ClosestGameL,'VariableNames',{'ClosestGameL'});
-% RelativeTimeL = array2table(RelativeTimeL,'VariableNames',{'RelativeTimeL'});
-% x = [x ClosestGame RelativeTime Condition];
+ClosestGameW = array2table(ClosestGameW,'VariableNames',{'ClosestGameW'});
+RelativeTimeW = array2table(RelativeTimeW,'VariableNames',{'RelativeTimeW'});
+ClosestGameL = array2table(ClosestGameL,'VariableNames',{'ClosestGameL'});
+RelativeTimeL = array2table(RelativeTimeL,'VariableNames',{'RelativeTimeL'});
+x = [x ClosestGameW RelativeTimeW ClosestGameL RelativeTimeL];
