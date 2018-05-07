@@ -1,6 +1,7 @@
 function UTC_Epoch = DateConverter(input)
 
-timeCell = cell(length(input.Date),1);
+Date2 = cell(length(input.Date),1);
+UTC = zeros(length(input.Date),1);
 for i=1:length(input.Date)
     a = input.Date{i};
     
@@ -42,13 +43,15 @@ for i=1:length(input.Date)
     
     timeDay = datestr(input.StartET(i),'HH:MM PM');
     
-    timeStr = [month,day,year," ",timeDay];
+    timeStr = strcat(month,day,year," ",timeDay);
     
-    timeCell{i}=timeStr;
+    Date2{i}=timeStr;
+    UTC(i) = round(8.64e7 * (datenum(timeStr{1},'mmdd yyyy HH:MM PM')- datenum('1970', 'yyyy')));
 end
 
-timeCell =  cell2table(timeCell);
-UTC_Epoch = [input,timeCell];
+Date2 =  cell2table(Date2);
+UTC = array2table(UTC);
+UTC_Epoch = [input,UTC];
 
 
 % unix_time = round(8.64e7 * (datenum('04/11/2014 10:30 AM','mm/dd/yyyy HH:MM PM')- datenum('1970', 'yyyy')))
