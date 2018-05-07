@@ -2,6 +2,7 @@ import httplib, urllib, base64
 import csv
 import pdb
 import json
+from time import sleep
 
 def requestChunk(input):
     headers = {
@@ -38,7 +39,7 @@ f = open('batch.output','w+')
 f.close()
 
 #Batch in 1000
-for i in range(0,len(lines),1000):
+for i in range(105000,len(lines),1000):
     #Open output file 'a'
     outputFile = open('batch.output','ab')
 
@@ -61,7 +62,9 @@ for i in range(0,len(lines),1000):
 
     response = ""
     response = requestChunk(jsonString) ############REQUEST############
-    outputFile.write(response)
+    outputFile.write(response+"\n")
     outputFile.close()
     print("Up to: "+str(i+j))
-    
+    print(response[-20:])
+    sleep(0.6)
+    pdb.set_trace()
