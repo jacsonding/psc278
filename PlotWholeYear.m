@@ -8,16 +8,20 @@ xmas = 1419465600;
 
 dailyMeans=[];
 dailyN=[];
+dailySTD = [];
 
 for i=startTime:dayDuration:endTime
     dM=mean(x.Scaled(x.created_utc>i&x.created_utc<(i+dayDuration)));
+    dSTD = std(x.Scaled(x.created_utc>i&x.created_utc<(i+dayDuration)));
     dN=sum(x.created_utc>i&x.created_utc<(i+dayDuration));
     
+    dailySTD = [dailySTD, dSTD];
     dailyMeans = [dailyMeans,dM];
     dailyN = [dailyN,dN];
 end
 
 %% Plotting
 % whole year average
-plot(dailyMeans,'-o')
-line([359 359],ylim)
+dailyMeans = movmean(dailyMeans,10);
+ActuallyPlotWholeYear(dailyMeans,'Average Sentiment per Day of 2014');
+print('~/Downloads/WholeYear_Lin_MovMean10','-dpng','-r300');
