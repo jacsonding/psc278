@@ -10,8 +10,8 @@ dailyMeans=[];
 dailyN=[];
 
 for i=startTime:dayDuration:endTime
-    dM=mean(reddit.Sentiment(reddit.created_utc>i&reddit.created_utc<(i+dayDuration)));
-    dN=sum(reddit.created_utc>i&reddit.created_utc<(i+dayDuration));
+    dM=mean(x.Scaled(x.created_utc>i&x.created_utc<(i+dayDuration)));
+    dN=sum(x.created_utc>i&x.created_utc<(i+dayDuration));
     
     dailyMeans = [dailyMeans,dM];
     dailyN = [dailyN,dN];
