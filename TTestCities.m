@@ -30,19 +30,19 @@ thisWpLp_n = zeros(27,1);
 for i=1:26
     % p-values
     thisCity{i} = CITIES{i}; %city name
-    [h,p] = ttest2(x.Scaled(x.RelativeTimeW<0 & x.City==i),x.Scaled(x.RelativeTimeW>0 & x.City==i)); %pre-win vs post-win
+    [p,h] = ranksum(x.Scaled(x.RelativeTimeW<0 & x.City==i),x.Scaled(x.RelativeTimeW>0 & x.City==i)); %pre-win vs post-win
     thisWWp(i) = p;
     thisWWp_n(i)= sum(x.RelativeTimeW<0 & x.City==i);
     thisWWp_h(i) = h;
-    [h,p] = ttest2(x.Scaled(x.RelativeTimeL<0 & x.City==i),x.Scaled(x.RelativeTimeL>0 & x.City==i)); %pre-loss vs post-loss
+    [p,h] = ranksum(x.Scaled(x.RelativeTimeL<0 & x.City==i),x.Scaled(x.RelativeTimeL>0 & x.City==i)); %pre-loss vs post-loss
     thisLLp(i) = p;
     thisLLp_n(i)= sum(x.RelativeTimeL<0 & x.City==i);
     thisLLp_h(i) = h;
-    [h,p] = ttest2(x.Scaled(x.RelativeTimeL<0 & x.City==i),x.Scaled(x.RelativeTimeW<0 & x.City==i)); %pre-loss vs pre-win
+    [p,h] = ranksum(x.Scaled(x.RelativeTimeL<0 & x.City==i),x.Scaled(x.RelativeTimeW<0 & x.City==i)); %pre-loss vs pre-win
     thisWL(i) = p;
     thisWL_n(i)= sum(x.RelativeTimeL<0 & x.City==i);
     thisWL_h(i) = h;
-    [h,p] = ttest2(x.Scaled(x.RelativeTimeL>0 & x.City==i),x.Scaled(x.RelativeTimeW>0 & x.City==i)); %post-loss vs post-win
+    [p,h] = ranksum(x.Scaled(x.RelativeTimeL>0 & x.City==i),x.Scaled(x.RelativeTimeW>0 & x.City==i)); %post-loss vs post-win
     thisWpLp(i) = p;
     thisWpLp_n(i)= sum(x.RelativeTimeL>0 & x.City==i);
     thisWpLp_h(i) = h;
@@ -51,19 +51,19 @@ end
 % TTest Whole
 i=27;
 thisCity{i} = 'Whole Dataset';
-[h,p] = ttest2(x.Scaled(x.RelativeTimeW<0),x.Scaled(x.RelativeTimeW>0)); %pre-win vs post-win
+[p,h] = ranksum(x.Scaled(x.RelativeTimeW<0),x.Scaled(x.RelativeTimeW>0)); %pre-win vs post-win
 thisWWp_n(i) = sum(x.RelativeTimeW<0);
 thisWWp(i) = p;
 thisWWp_h(i) = h;
-[h,p] = ttest2(x.Scaled(x.RelativeTimeL<0),x.Scaled(x.RelativeTimeL>0)); %pre-loss vs post-loss
+[p,h] = ranksum(x.Scaled(x.RelativeTimeL<0),x.Scaled(x.RelativeTimeL>0)); %pre-loss vs post-loss
 thisLLp_n(i) = sum(x.RelativeTimeL<0);
 thisLLp(i) = p;
 thisLLp_h(i) = h;
-[h,p] = ttest2(x.Scaled(x.RelativeTimeL<0),x.Scaled(x.RelativeTimeW<0)); %pre-loss vs pre-win
+[p,h] = ranksum(x.Scaled(x.RelativeTimeL<0),x.Scaled(x.RelativeTimeW<0)); %pre-loss vs pre-win
 thisWL_n(i) = sum(x.RelativeTimeL<0);
 thisWL(i) = p;
 thisWL_h(i) = h;
-[h,p] = ttest2(x.Scaled(x.RelativeTimeL>0),x.Scaled(x.RelativeTimeW>0)); %post-loss vs post-win
+[p,h] = ranksum(x.Scaled(x.RelativeTimeL>0),x.Scaled(x.RelativeTimeW>0)); %post-loss vs post-win
 thisWpLp_n(i) = sum(x.RelativeTimeL>0);
 thisWpLp(i) = p;
 thisWpLp_h(i) = h;
@@ -72,7 +72,7 @@ thisWpLp_h(i) = h;
 StatResults = table(thisCity,thisWWp,thisLLp,thisWL,thisWpLp,...
     'VariableNames',...
     {'City','Pre_Win_vs_Post_Win','Pre_Loss_vs_Post_Loss','Pre_Loss_vs_Pre_Win','Post_Loss_vs_Post_Win'});
-StatResultsH = table(thisCity,thisWWp_n,thisLLp_n,thisWL_n,thisWpLp_n,...
+StatResultsH = table(thisCity,thisWWp_h,thisLLp_h,thisWL_h,thisWpLp_h,...
     'VariableNames',...
     {'City','Pre_Win_vs_Post_Win','Pre_Loss_vs_Post_Loss','Pre_Loss_vs_Pre_Win','Post_Loss_vs_Post_Win'});
 %
